@@ -86,7 +86,7 @@ void addNode(Graph& g, const int& edges) {
 void deleteNode(Graph& g, const int& node) {
     int size = g.node.size();
     if(node >= size || g.node[node].alive == false) {
-        cout << "Node " << node << " does not exist in the graph" << endl;
+        cout << "\nNode " << node << " does not exist in the graph" << endl;
         return;
     }
 
@@ -96,10 +96,10 @@ void deleteNode(Graph& g, const int& node) {
     g.node[node].adj.clear();
     g.node[node].alive = false;
     g.aliveNodes--;
-    cout << "Node " << node << " deleted successfully!" << endl;
+    cout << "\nNode " << node << " deleted successfully!" << endl;
 }
 
-void displayGraph(const Graph& g) {
+void displayAdjacencyLists(const Graph& g) {
     cout << endl;
     for(int i=0;i<g.node.size();i++) {
         if(g.node[i].alive == true) {
@@ -112,14 +112,62 @@ void displayGraph(const Graph& g) {
     }
 }
 
+void dfs(const Graph& g, int vertex, vector<int>& visited) {
+    visited[vertex] = 1;
+    cout << vertex << " ";
+    for(int v : g.node[vertex].adj) {
+        if(!visited[v]) {
+            dfs(g, v, visited);
+        }
+    }
+}
+
+void dfsDisplay(const Graph& g) {
+    vector<int> visited(g.node.size());
+    for(int i=0;i<g.node.size();i++) {
+        if(g.node[i].alive && !visited[i]) {
+            dfs(g, i, visited);
+        }
+    }
+}
+
+void bfsDisplay(const Graph& g) {
+    vector<int> visited(g.node.size());
+    queue<int> q;
+    for(int i=0;i<g.node.size();i++) {
+        if(g.node[i].alive && !visited[i]) {
+            visited[i] = 1;
+            q.push(i);
+        }
+        while(!q.empty()) {
+            int vertex = q.front();
+            q.pop();
+            cout << vertex << " ";
+            for(int neighbor : g.node[vertex].adj) {
+                if(!visited[neighbor]) {
+                    visited[neighbor] = 1;
+                    q.push(neighbor);
+                }
+            }
+        }
+    }
+}
+
 int main() {
     Graph g;
     addNode(g, 0);
     addNode(g, 1);
+    addNode(g, 1);
+    addNode(g, 1);
     addNode(g, 2);
-    addNode(g, 4);
-    displayGraph(g);
+    addNode(g, 1);
+    addNode(g, 2);
+    addNode(g, 0);
+    addNode(g, 1);
+    addNode(g, 0);
+    dfsDisplay(g);
     deleteNode(g, 1);
-
-    displayGraph(g);
+    dfsDisplay(g);
+    cout << endl;
+    bfsDisplay(g);
 }
