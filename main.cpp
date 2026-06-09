@@ -52,7 +52,7 @@ void addNode(Graph& g, const int& edges) {
     int i=0;
     while(i < edges) {
         int vertex;
-        cout << "\nEnter the vertex to connect the edge " << i+1 << ": ";
+        cout << "\nEnter the vertex to connect the edge " << i+1 << " starting from the new node" << ": ";
         cin >> vertex;
         if(vertex < size) {
             if(g.node[vertex].alive == false) {
@@ -67,8 +67,6 @@ void addNode(Graph& g, const int& edges) {
                 }
                 else {
                     g.node[index].adj.insert(pos, vertex);
-                    auto posInVertex = lower_bound(g.node[vertex].adj.begin(), g.node[vertex].adj.end(), index);
-                    g.node[vertex].adj.insert(posInVertex, index);
                     cout << "Edge added successfully!" << endl;
                     i++;
                 }
@@ -97,6 +95,42 @@ void deleteNode(Graph& g, const int& node) {
     g.node[node].alive = false;
     g.aliveNodes--;
     cout << "\nNode " << node << " deleted successfully!" << endl;
+}
+
+void addEdge(Graph& g, const int& start, const int& end) {
+    int size = g.node.size();
+    if(start >= size || end >= size || !g.node[start].alive || !g.node[end].alive) {
+        cout << "Invalid start or end node" << endl;
+        return;
+    }
+    auto pos = lower_bound(g.node[start].adj.begin(), g.node[start].adj.end(), end);
+    
+    //Check if the edge already exists
+    if(pos != g.node[start].adj.end() && *pos == end) {
+        cout << "Edge [" << start << "," << end << "] already exists" << endl;
+    }
+    else {
+        g.node[start].adj.insert(pos, end);
+    }
+    cout << "Edge [" << start << "," << end << "] added successfully!" << endl;
+}
+
+void deleteEdge(Graph& g, const int& start, const int& end) {
+    int size = g.node.size();
+    if(start >= size || end >= size || !g.node[start].alive || !g.node[end].alive) {
+        cout << "Invalid start or end node" << endl;
+        return;
+    }
+
+    //Check if the edge exists
+    auto pos = lower_bound(g.node[start].adj.begin(), g.node[start].adj.end(), end);
+    if(pos != g.node[start].adj.end() && *pos == end) {
+        erase(g.node[start].adj, end);
+        cout << "Edge [" << start << "," << end << "] deleted successfully!" << endl;
+    }
+    else {
+        cout << "Edge [" << start << "," << end << "] does not exist" << endl;
+    }
 }
 
 void displayAdjacencyLists(const Graph& g) {
@@ -156,18 +190,40 @@ void bfsDisplay(const Graph& g) {
 int main() {
     Graph g;
     addNode(g, 0);
-    addNode(g, 1);
-    addNode(g, 1);
-    addNode(g, 1);
-    addNode(g, 2);
-    addNode(g, 1);
-    addNode(g, 2);
     addNode(g, 0);
-    addNode(g, 1);
     addNode(g, 0);
+    addNode(g, 0);
+    addNode(g, 0);
+    addNode(g, 0);
+    addNode(g, 0);
+    addNode(g, 0);
+    addNode(g, 0);
+    addNode(g, 0);
+    addNode(g, 0);
+    addNode(g, 0);
+    addNode(g, 0);
+
+    addEdge(g, 0, 1);
+    addEdge(g, 0, 2);
+    addEdge(g, 1, 3);
+    addEdge(g, 1, 4);
+    addEdge(g, 2, 4);
+    addEdge(g, 2, 5);
+    addEdge(g, 3, 6);
+    addEdge(g, 4, 1);
+    addEdge(g, 4, 6);
+    addEdge(g, 5, 2);
+    addEdge(g, 5, 7);
+    addEdge(g, 6, 0);
+    addEdge(g, 7, 8);
+    addEdge(g, 8, 5);
+    addEdge(g, 9, 10);
+    addEdge(g, 10, 11);
+    addEdge(g, 11, 9);
+
     dfsDisplay(g);
-    deleteNode(g, 1);
-    dfsDisplay(g);
+    // deleteNode(g, 1);
+    // dfsDisplay(g);
     cout << endl;
     bfsDisplay(g);
 }
