@@ -1,0 +1,148 @@
+.friends-list {
+  background: white;
+  border-radius: 15px;
+  padding: 30px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  grid-area: friends;
+  display: flex;
+  flex-direction: column;
+}
+
+.friends-header {
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 2px solid #f0f0f0;
+}
+
+.friends-header h3 {
+  color: #333;
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+.no-friends {
+  text-align: center;
+  padding: 40px 20px;
+  color: #999;
+}
+
+.no-friends p {
+  margin: 0;
+  font-style: italic;
+}
+
+.friends-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+  flex: 1;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.friend-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  background: #f9f9f9;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  border-left: 4px solid transparent;
+}
+
+.friend-card:hover {
+  background: #f0f0f0;
+  border-left-color: #667eea;
+  transform: translateX(5px);
+}
+
+.friend-avatar {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 1.2rem;
+  font-weight: bold;
+  flex-shrink: 0;
+}
+
+.friend-details {
+  flex: 1;
+}
+
+.friend-details h4 {
+  margin: 0;
+  color: #333;
+  font-size: 0.95rem;
+}
+
+.friend-details p {
+  margin: 3px 0;
+  color: #666;
+  font-size: 0.85rem;
+}
+
+.friend-details small {
+  color: #999;
+  display: block;
+  margin-top: 2px;
+}
+
+.friend-arrow {
+  color: #667eea;
+  font-size: 1.2rem;
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+
+.friend-card:hover .friend-arrow {
+  opacity: 1;
+  transform: translateX(3px);
+}
+
+.friends-stats {
+  display: flex;
+  gap: 15px;
+  padding-top: 20px;
+  border-top: 2px solid #f0f0f0;
+  margin-top: auto;
+}
+
+.stat-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+}
+
+.stat-icon {
+  font-size: 1.5rem;
+}
+
+.stat-label {
+  margin: 0;
+  color: #999;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.stat-value {
+  margin: 5px 0 0 0;
+  color: #667eea;
+  font-size: 1.3rem;
+  font-weight: bold;
+}
+
+@media (max-width: 768px) {
+  .friends-stats {
+    flex-direction: column;
+  }
+}
